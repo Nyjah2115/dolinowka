@@ -1,0 +1,413 @@
+/* Dolinówka – kierunek „klasyczny z rezerwacją” (wzory: Pole w Stodole, Osada Jaworzyny, Stodoły Modyń).
+   Zwykłe kroje (Montserrat + Open Sans), biel i szarość, jeden kolor z logo (zieleń), mało zaokrągleń. */
+:root {
+  --ziel: #3E6B3A;
+  --ziel-ciemna: #2C4E29;
+  --tekst: #333;
+  --szary: #6B6B6B;
+  --linia: #E2E2E2;
+  --tlo: #F5F5F3;
+}
+* { box-sizing: border-box; margin: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { color: var(--tekst); font: 400 16px/1.7 "Open Sans", Arial, sans-serif; background: #fff; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+
+.przycisk {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 22px; border: 0; border-radius: 3px; cursor: pointer;
+  background: var(--ziel); color: #fff;
+  font: 700 13px/1 "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase;
+  transition: background .2s;
+}
+.przycisk:hover { background: var(--ziel-ciemna); }
+
+/* Górny pasek z telefonem, mailem i ikonkami */
+.gorny-pasek { position: absolute; top: 0; left: 0; right: 0; z-index: 41; background: rgba(0, 0, 0, .35); color: #fff; font-size: 13px; }
+.gorny-pasek__w { display: flex; justify-content: space-between; align-items: center; max-width: 1240px; height: 36px; margin: 0 auto; padding: 0 24px; }
+.gorny-pasek p { display: flex; align-items: center; gap: 22px; }
+.gorny-pasek a { display: inline-flex; align-items: center; gap: 7px; opacity: .92; }
+.gorny-pasek a:hover { opacity: 1; }
+.gorny-pasek svg { width: 15px; height: 15px; }
+.gorny-pasek__jezyk { opacity: .9; }
+
+/* Menu: na zdjęciu przezroczyste, po przewinięciu białe z logo */
+.naglowek {
+  position: absolute; top: 36px; left: 0; right: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: center; gap: 26px;
+  height: 72px; padding: 0 24px; color: #fff;
+}
+.naglowek--staly {
+  position: fixed; top: 0; background: #fff; color: var(--tekst);
+  box-shadow: 0 1px 0 var(--linia), 0 4px 14px rgba(0, 0, 0, .06);
+}
+.naglowek__logo { display: none; align-items: center; gap: 10px; margin-right: auto; color: var(--ziel); }
+.naglowek--staly .naglowek__logo { display: inline-flex; }
+.naglowek__logo .emblemat { width: 40px; height: 40px; }
+.naglowek__logo span { font: 700 17px "Montserrat", sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.menu { display: flex; gap: 28px; font: 600 13px "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.menu a { padding: 6px 0; border-bottom: 2px solid transparent; transition: border-color .2s; }
+.menu a:hover { border-color: currentColor; }
+.naglowek__rezerwuj { position: absolute; right: 24px; }
+.naglowek--staly .naglowek__rezerwuj { position: static; margin-left: 10px; }
+.naglowek__menu { display: none; }
+
+/* Zdjęcie na cały ekran z logo na środku i paskiem rezerwacji na dole */
+.hero { position: relative; isolation: isolate; height: 100svh; min-height: 640px; color: #fff; overflow: hidden; }
+.hero picture, .hero__zdjecie { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+.hero__zdjecie { object-fit: cover; object-position: 50% 50%; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 0, 0, .45) 0, rgba(0, 0, 0, .18) 30%, rgba(0, 0, 0, .2) 60%, rgba(0, 0, 0, .55) 100%); }
+.hero__srodek { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-62%); text-align: center; padding: 0 20px; }
+.hero__emblemat { width: 112px; height: 112px; margin: 0 auto 14px; }
+.hero__nazwa { font: 700 clamp(40px, 5vw, 66px)/1 "Montserrat", sans-serif; letter-spacing: .2em; text-transform: uppercase; text-shadow: 0 2px 18px rgba(0, 0, 0, .35); margin-right: -.2em; }
+.hero__podpis { margin-top: 14px; font-size: 19px; text-shadow: 0 1px 10px rgba(0, 0, 0, .4); }
+
+.rezerwacja {
+  position: absolute; left: 50%; bottom: 74px; transform: translateX(-50%);
+  display: grid; grid-template-columns: 1.2fr 1.2fr .8fr .8fr auto; width: min(980px, calc(100% - 48px));
+  background: #fff; color: var(--tekst); border-radius: 3px; box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+}
+.rezerwacja__pole { display: block; padding: 13px 18px; border-right: 1px solid var(--linia); cursor: pointer; }
+.rezerwacja__pole:hover { background: #FAFAF8; }
+.rezerwacja__etykieta { display: block; font: 600 11px "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--szary); }
+.rezerwacja__wartosc { display: flex; justify-content: space-between; align-items: center; margin-top: 3px; font-size: 15px; }
+.rezerwacja__wartosc svg { width: 17px; height: 17px; color: var(--ziel); }
+.rezerwacja__szukaj { border-radius: 0 3px 3px 0; padding: 0 30px; font-size: 13px; }
+.hero__bezposrednio {
+  position: absolute; left: 0; right: 0; bottom: 38px; text-align: center; font-size: 14px;
+  display: flex; align-items: center; justify-content: center; gap: 8px; text-shadow: 0 1px 8px rgba(0, 0, 0, .5);
+}
+.hero__bezposrednio svg { width: 16px; height: 16px; }
+
+.odznaka {
+  position: absolute; right: 34px; bottom: 170px; width: 112px; height: 112px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  background: #fff; color: var(--tekst); box-shadow: 0 6px 20px rgba(0, 0, 0, .2); font-size: 10.5px; line-height: 1.3;
+}
+.odznaka strong { font: 700 30px/1 "Montserrat", sans-serif; color: var(--ziel); }
+.odznaka__gwiazdki { color: #F2A900; font-size: 11px; letter-spacing: 1px; margin: 3px 0 2px; }
+
+/* Witamy */
+.witamy { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; max-width: 1240px; margin: 0 auto; padding: 90px 24px; }
+.tytul { font: 600 32px/1.25 "Montserrat", sans-serif; color: #222; }
+.tytul::after { content: ""; display: block; width: 56px; height: 3px; margin-top: 16px; background: var(--ziel); }
+.witamy__tekst p { margin-top: 18px; color: #4A4A4A; }
+.witamy__podpis { font-style: italic; color: var(--ziel) !important; }
+.witamy__fakty { display: flex; flex-wrap: wrap; gap: 14px 30px; margin-top: 30px; padding: 22px 0 0; border-top: 1px solid var(--linia); list-style: none; }
+.witamy__fakty li { display: flex; align-items: center; gap: 9px; white-space: nowrap; font-size: 14.5px; font-weight: 600; color: #3A3A3A; }
+.witamy__fakty svg { width: 24px; height: 24px; color: var(--ziel); flex: none; }
+.witamy__zdjecie { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+
+/* Tablet i telefon */
+@media (max-width: 1080px) {
+  .menu { gap: 18px; font-size: 12px; }
+  .odznaka { display: none; }
+}
+@media (max-width: 900px) {
+  .gorny-pasek { display: none; }
+  .naglowek { top: 0; justify-content: space-between; height: 64px; }
+  .naglowek__logo { display: inline-flex; color: #fff; }
+  .naglowek--staly .naglowek__logo { color: var(--ziel); }
+  .naglowek__logo .emblemat { width: 34px; height: 34px; }
+  .naglowek__logo span { font-size: 15px; }
+  .naglowek__rezerwuj, .naglowek--staly .naglowek__rezerwuj { display: none; }
+  .naglowek__menu { display: grid; gap: 5px; width: 44px; height: 44px; place-content: center; border: 0; background: none; color: inherit; cursor: pointer; }
+  .naglowek__menu i { display: block; width: 24px; height: 2px; background: currentColor; }
+  .menu { display: none; }
+  .menu.menu--otwarte {
+    display: flex; flex-direction: column; gap: 0; position: fixed; top: 64px; left: 0; right: 0; z-index: 50;
+    background: #fff; color: var(--tekst); font-size: 14px; box-shadow: 0 10px 20px rgba(0, 0, 0, .1);
+  }
+  .menu--otwarte a { padding: 16px 24px; border-bottom: 1px solid var(--linia); }
+  .witamy { grid-template-columns: 1fr; gap: 34px; padding: 60px 20px; }
+}
+@media (max-width: 760px) {
+  .hero { min-height: 640px; }
+  .hero__srodek { top: 108px; transform: none; }
+  .hero__emblemat { width: 84px; height: 84px; margin-bottom: 10px; }
+  .hero__nazwa { font-size: 36px; letter-spacing: .16em; margin-right: -.16em; }
+  .hero__podpis { font-size: 16px; margin-top: 10px; }
+  .rezerwacja { grid-template-columns: 1fr 1fr; bottom: 66px; width: calc(100% - 28px); }
+  .rezerwacja__pole { border-bottom: 1px solid var(--linia); padding: 10px 14px; }
+  .rezerwacja__pole:nth-child(2n) { border-right: 0; }
+  .rezerwacja__szukaj { grid-column: 1 / -1; padding: 16px; border-radius: 0 0 3px 3px; }
+  .hero__bezposrednio { bottom: 26px; font-size: 12.5px; padding: 0 14px; }
+  .tytul { font-size: 26px; }
+  .witamy__fakty { gap: 12px 22px; }
+}
+
+/* ===== Reszta strony (dom, galeria, cennik, terminy, opinie, okolica, kontakt, stopka) ===== */
+section[id] { scroll-margin-top: 72px; }
+.sekcja { padding: 84px 0; }
+.sekcja--szara { background: var(--tlo); }
+.sekcja__w { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+.sekcja__w--waska { max-width: 860px; }
+.tytul--srodek { text-align: center; }
+.tytul--srodek::after { margin-left: auto; margin-right: auto; }
+.sekcja__wstep { max-width: 640px; margin: 18px auto 40px; text-align: center; color: var(--szary); }
+.srodek { text-align: center; margin-top: 30px; }
+
+/* Dom */
+.dom { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; }
+.dom__film { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: pointer; border-radius: 3px; overflow: hidden; }
+.dom__film img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; opacity: .9; transition: transform .6s, opacity .3s; }
+.dom__film:hover img { transform: scale(1.03); opacity: 1; }
+.dom__odtworz {
+  position: absolute; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px;
+  display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, .92); color: var(--ziel);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25); transition: transform .25s;
+}
+.dom__odtworz svg { width: 34px; height: 34px; margin-left: 4px; }
+.dom__film:hover .dom__odtworz { transform: scale(1.07); }
+.dom__napis {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 18px; text-align: left;
+  background: linear-gradient(0deg, rgba(0, 0, 0, .6), rgba(0, 0, 0, 0)); color: #fff;
+  font: 700 14px "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase;
+}
+.dom__tytul { font: 600 20px "Montserrat", sans-serif; color: #222; margin-bottom: 14px; }
+.ptaszki { list-style: none; padding: 0; display: grid; gap: 8px; }
+.ptaszki li { position: relative; padding-left: 28px; }
+.ptaszki li::before {
+  content: ""; position: absolute; left: 2px; top: 7px; width: 14px; height: 8px;
+  border-left: 2.5px solid var(--ziel); border-bottom: 2.5px solid var(--ziel); transform: rotate(-45deg);
+}
+.dom__dane { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--linia); }
+.dom__dane dt { font: 600 11px "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--szary); }
+.dom__dane dd { font: 600 18px "Montserrat", sans-serif; color: #222; }
+
+/* Galeria */
+.galeria { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 40px; }
+.galeria__el { display: block; overflow: hidden; border-radius: 2px; }
+.galeria__el img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .5s; }
+.galeria__el:hover img { transform: scale(1.06); }
+
+/* Cennik: zwykła tabela jak na stronach obiektów */
+.cennik { width: 100%; border-collapse: collapse; background: #fff; font-size: 15.5px; }
+.cennik th { padding: 14px 18px; background: var(--ziel); color: #fff; text-align: left; font: 600 12px "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.cennik td { padding: 14px 18px; border-bottom: 1px solid var(--linia); }
+.cennik td:nth-child(2) { font-weight: 600; color: #222; }
+.cennik tbody tr:nth-child(even) td { background: #FAFAF8; }
+.cennik__uwagi { margin-top: 18px; padding-left: 18px; color: var(--szary); font-size: 14.5px; }
+
+/* Kalendarz wolnych terminów jak w systemie rezerwacji */
+.kalendarz { display: grid; grid-template-columns: 1fr 360px; gap: 24px; align-items: start; }
+.kalendarz__miesiace { border: 1px solid var(--linia); border-radius: 3px; padding: 20px 24px 24px; background: #fff; }
+.kalendarz__pasek { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 14px; }
+.kalendarz__strzalka { width: 38px; height: 38px; border: 1px solid var(--linia); border-radius: 3px; background: #fff; font-size: 22px; line-height: 1; cursor: pointer; color: var(--ziel); }
+.kalendarz__strzalka:disabled { opacity: .3; cursor: default; }
+.kalendarz__legenda { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; font-size: 13px; color: var(--szary); }
+.kalendarz__legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.znak { display: inline-block; width: 12px; height: 12px; border-radius: 2px; }
+.znak--wolne { border: 1px solid #BFBFBF; background: #fff; }
+.znak--zajete { background: #E9E9E6; }
+.znak--wybrane { background: var(--ziel); }
+.kalendarz__siatki { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+.miesiac__nazwa { text-align: center; font: 600 15px "Montserrat", sans-serif; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 10px; color: #222; }
+.miesiac__dni { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.miesiac__tyg { text-align: center; font-size: 12px; color: var(--szary); padding: 4px 0; }
+.komorka { display: block; }
+.dzien {
+  width: 100%; aspect-ratio: 1.15; border: 1px solid #E6E6E6; border-radius: 2px; background: #fff;
+  font: 600 14px "Open Sans", sans-serif; color: #333; cursor: pointer; transition: background .15s, border-color .15s;
+}
+.dzien:hover { border-color: var(--ziel); }
+.dzien--przeszly { color: #C4C4C4; background: #FAFAFA; cursor: default; }
+.dzien--przeszly:hover { border-color: #E6E6E6; }
+.dzien--zajete { background: #E9E9E6; color: #A3A39C; text-decoration: line-through; cursor: not-allowed; }
+.dzien--zajete:hover { border-color: #E6E6E6; }
+.dzien--zakres { background: #DCE8DA; border-color: #DCE8DA; }
+.dzien--wybrany, .dzien--wybrany:hover { background: var(--ziel); border-color: var(--ziel); color: #fff; text-decoration: none; }
+.dzien--wyjazd-zajety { cursor: pointer; }
+.dzien--dzis { box-shadow: inset 0 0 0 2px #F2A900; }
+
+.pobyt { border: 1px solid var(--linia); border-radius: 3px; background: var(--tlo); padding: 22px; position: sticky; top: 96px; }
+.pobyt__tytul { font: 600 18px "Montserrat", sans-serif; color: #222; margin-bottom: 14px; }
+.pobyt__wiersz { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--linia); font-size: 15px; }
+.pobyt__wiersz span:first-child { color: var(--szary); }
+.pobyt__wiersz b { color: #222; }
+.licznik { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; }
+.licznik button { width: 28px; height: 28px; border: 1px solid #CFCFCF; border-radius: 2px; background: #fff; cursor: pointer; font-size: 16px; line-height: 1; color: var(--ziel); }
+.licznik button:disabled { opacity: .35; cursor: default; }
+.pobyt__suma { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; }
+.pobyt__suma b { font: 700 24px "Montserrat", sans-serif; color: var(--ziel); }
+.pobyt__info { margin-top: 10px; font-size: 13.5px; color: var(--szary); }
+.pobyt__info--uwaga { color: #B4561F; }
+.pobyt .przycisk { width: 100%; margin-top: 16px; padding: 15px; }
+.pobyt__formularz { display: grid; gap: 10px; margin-top: 14px; }
+.pobyt__formularz input, .pobyt__formularz textarea, .kontakt__formularz input, .kontakt__formularz textarea {
+  width: 100%; padding: 11px 13px; border: 1px solid #CFCFCF; border-radius: 2px; background: #fff;
+  font: 400 15px "Open Sans", sans-serif; color: #333;
+}
+.pobyt__formularz input:focus, .kontakt__formularz input:focus, .kontakt__formularz textarea:focus { outline: 2px solid var(--ziel); outline-offset: -1px; }
+.pobyt__formularz input.blad { border-color: #C0392B; }
+.pobyt__wstecz { margin-top: 12px; border: 0; background: none; color: var(--ziel); cursor: pointer; font-size: 14px; text-decoration: underline; padding: 0; }
+.pobyt__gotowe { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 12px; border-radius: 50%; background: var(--ziel); color: #fff; }
+.pobyt__gotowe svg { width: 26px; height: 26px; }
+
+/* Opinie */
+.opinie__ocena { margin: 16px 0 34px; text-align: center; color: var(--szary); }
+.opinie__ocena b { font: 700 22px "Montserrat", sans-serif; color: #222; margin-right: 4px; }
+.gwiazdki { color: #F2A900; letter-spacing: 2px; }
+.opinie { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.opinia { margin: 0; padding: 22px; background: #fff; border: 1px solid var(--linia); border-radius: 3px; }
+.opinia__glowa { display: flex; align-items: center; gap: 12px; }
+.opinia__glowa p { display: flex; flex-direction: column; line-height: 1.3; }
+.opinia__glowa p span { font-size: 13px; color: var(--szary); }
+.opinia__inicjal { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #5B7F55; color: #fff; font-weight: 600; flex: none; }
+.opinia__g { width: 22px; height: 22px; margin-left: auto; flex: none; }
+.opinia .gwiazdki { margin: 12px 0 8px; font-size: 15px; }
+.opinia blockquote { margin: 0; color: #4A4A4A; font-size: 15px; }
+
+/* Okolica */
+.okolica { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.okolica__zdjecie { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+.okolica p { margin-top: 18px; color: #4A4A4A; }
+.okolica__lista { list-style: none; padding: 0; margin-top: 22px; border-top: 1px solid var(--linia); }
+.okolica__lista li { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--linia); }
+.okolica__lista span { color: var(--szary); white-space: nowrap; font-size: 14.5px; }
+
+/* Kontakt + mapa */
+.kontakt { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: stretch; }
+.kontakt__dane p { margin-top: 16px; color: #4A4A4A; }
+.kontakt__dane a { color: var(--ziel); font-weight: 600; }
+.kontakt__formularz { display: grid; gap: 10px; margin-top: 24px; }
+.kontakt__formularz .przycisk { justify-self: start; padding: 14px 24px; }
+.kontakt__dziekujemy { display: none; color: var(--ziel) !important; font-weight: 600; }
+.kontakt__formularz.wyslany .kontakt__dziekujemy { display: block; }
+.kontakt__mapa { width: 100%; min-height: 420px; height: 100%; border: 1px solid var(--linia); border-radius: 3px; }
+
+/* Stopka */
+.stopka { background: #24321F; color: #DCE3D8; font-size: 14.5px; }
+.stopka__w { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; max-width: 1240px; margin: 0 auto; padding: 56px 24px 40px; }
+.stopka__logo { display: flex; align-items: center; gap: 14px; color: #fff; }
+.stopka__logo .emblemat { width: 58px; height: 58px; flex: none; }
+.stopka__logo p { display: flex; flex-direction: column; line-height: 1.4; }
+.stopka__logo b { font: 700 18px "Montserrat", sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.stopka__logo span { font-size: 13px; opacity: .8; }
+.stopka h4 { margin-bottom: 10px; color: #fff; font: 600 12px "Montserrat", sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.stopka a:hover { color: #fff; text-decoration: underline; }
+.stopka__dol { max-width: 1240px; margin: 0 auto; padding: 18px 24px 26px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 12.5px; opacity: .7; }
+
+/* Pasek na dole na telefonie */
+.pasek-dol { display: none; }
+
+/* Przelot po domu (okno na cały ekran nad wszystkim) */
+.wnetrze {
+  position: fixed; inset: 0; z-index: 60; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 20px 30px 28px;
+  background: #111; color: #fff; opacity: 0; transition: opacity .45s ease;
+}
+.wnetrze[hidden] { display: none; }
+.wnetrze--widoczne { opacity: 1; }
+.wnetrze__wideo { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.wnetrze::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, rgba(0, 0, 0, 0) 22%), linear-gradient(0deg, rgba(0, 0, 0, .55) 0, rgba(0, 0, 0, 0) 26%); }
+.wnetrze__paski { display: flex; gap: 6px; }
+.wnetrze__paski i { position: relative; flex: 1; height: 3px; overflow: hidden; border-radius: 2px; background: rgba(255, 255, 255, .35); }
+.wnetrze__paski i::after { content: ""; position: absolute; inset: 0; background: #fff; transform: scaleX(var(--postep, 0)); transform-origin: left; }
+.wnetrze__naglowek { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.wnetrze__nazwa { font: 700 20px "Montserrat", sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+.wnetrze__zamknij { padding: 10px 16px; border: 0; border-radius: 3px; background: #fff; color: #222; cursor: pointer; font: 700 12px "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.wnetrze__zamknij span { font-size: 16px; margin-left: 4px; }
+.wnetrze__dol { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px; }
+.wnetrze__pokoje { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.wnetrze__pokoje button { padding: 9px 14px; border: 1px solid rgba(255, 255, 255, .6); border-radius: 3px; background: rgba(0, 0, 0, .3); color: #fff; cursor: pointer; font: 600 12px "Montserrat", sans-serif; letter-spacing: .05em; text-transform: uppercase; }
+.wnetrze__pokoje button.aktywny, .wnetrze__pokoje button:hover { background: #fff; color: #222; border-color: #fff; }
+.wnetrze__terminy { padding: 14px 22px; }
+.wnetrze-klon { position: fixed; z-index: 61; object-fit: cover; pointer-events: none; will-change: transform, opacity; }
+
+/* Galeria w powiększeniu */
+.lightbox { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; background: rgba(0, 0, 0, .9); }
+.lightbox[hidden] { display: none; }
+.lightbox__zdjecie { max-width: min(92vw, 1500px); max-height: 84vh; object-fit: contain; }
+.lightbox__zamknij { position: absolute; top: 14px; right: 18px; border: 0; background: none; color: #fff; font-size: 40px; line-height: 1; cursor: pointer; }
+.lightbox__strzalka { position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .15); color: #fff; font-size: 34px; line-height: 1; cursor: pointer; }
+.lightbox__strzalka--lewo { left: 18px; }
+.lightbox__strzalka--prawo { right: 18px; }
+.lightbox__licznik { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; color: #ddd; font-size: 14px; }
+
+@media (max-width: 1080px) {
+  .kalendarz { grid-template-columns: 1fr; }
+  .pobyt { position: static; }
+  .opinie { grid-template-columns: 1fr; }
+  .stopka__w { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .dom, .okolica, .kontakt { grid-template-columns: 1fr; gap: 30px; }
+  .galeria { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .sekcja { padding: 60px 0; }
+  .sekcja__w { padding: 0 16px; }
+  .sekcja__wstep { margin-bottom: 28px; }
+  .kalendarz__miesiace { padding: 14px 10px 16px; }
+  .kalendarz__siatki { grid-template-columns: 1fr; }
+  .miesiac:nth-child(2) { display: none; }
+  .cennik { font-size: 14px; }
+  .cennik th, .cennik td { padding: 11px 10px; }
+  .okolica__lista li { flex-direction: column; gap: 0; }
+  .stopka__w { grid-template-columns: 1fr; padding-bottom: 24px; }
+  .stopka { padding-bottom: 70px; }
+  .pasek-dol {
+    display: grid; grid-template-columns: 1fr 1.4fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: #fff; box-shadow: 0 -2px 12px rgba(0, 0, 0, .12); transform: translateY(100%); transition: transform .3s;
+  }
+  .pasek-dol--widoczny { transform: none; }
+  .pasek-dol__tel { display: grid; place-items: center; font: 700 13px "Montserrat", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ziel); }
+  .pasek-dol__rez { border-radius: 0; padding: 18px; }
+  .wnetrze { padding: 14px 14px 18px; }
+  .wnetrze__dol { flex-direction: column; align-items: stretch; }
+  .wnetrze__terminy { width: 100%; }
+  .lightbox__strzalka { width: 42px; height: 42px; font-size: 28px; }
+}
+
+/* ===== Rezerwacja na zdjęciu: pola-przyciski, kalendarz, goście i wynik nad paskiem, okienko z formularzem ===== */
+button.rezerwacja__pole { width: 100%; border: 0; border-right: 1px solid var(--linia); background: #fff; color: inherit; font: inherit; text-align: left; }
+.rezerwacja__pole--aktywne { box-shadow: inset 0 -3px 0 var(--ziel); background: #FAFAF8; }
+.rezerwacja__wartosc span { white-space: nowrap; }
+.wybor {
+  position: absolute; z-index: 5; background: #fff; color: var(--tekst); border-radius: 3px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .3); padding: 18px 20px;
+}
+.wybor[hidden] { display: none; }
+.wybor--daty { width: min(700px, calc(100% - 28px)); }
+.wybor--goscie { width: 300px; }
+.wybor--wynik { width: min(560px, calc(100% - 28px)); }
+.wybor__pasek { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
+.wybor__podpowiedz { font: 600 14px "Montserrat", sans-serif; color: #222; text-align: center; }
+.wybor .kalendarz__siatki { gap: 26px; }
+.wybor .dzien { aspect-ratio: 1.3; font-size: 13.5px; }
+.wybor__dol { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--linia); }
+.wybor__wyczysc { border: 0; background: none; color: var(--ziel); cursor: pointer; font-size: 14px; text-decoration: underline; }
+.dzien--podglad { background: #EEF4EC; border-color: #DCE8DA; }
+.goscie__wiersz { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--linia); }
+.goscie__wiersz p { display: flex; flex-direction: column; line-height: 1.3; }
+.goscie__wiersz small { color: var(--szary); font-size: 12.5px; }
+.goscie__info { margin: 10px 0 12px; font-size: 13px; color: var(--szary); }
+.wybor__gotowe { width: 100%; padding: 13px; }
+.wynik__tytul { display: flex; align-items: center; gap: 10px; font: 600 17px "Montserrat", sans-serif; color: #222; }
+.wynik__tytul i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ziel); color: #fff; font-style: normal; font-size: 15px; flex: none; }
+.wynik__tytul--zajete i { background: #B4561F; }
+.wynik__wiersz { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--linia); font-size: 15px; }
+.wynik__wiersz span:first-child { color: var(--szary); }
+.wynik__dol { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 14px; }
+.wynik__cena b { display: block; font: 700 26px/1.1 "Montserrat", sans-serif; color: var(--ziel); }
+.wynik__cena small { color: var(--szary); font-size: 12.5px; }
+.wynik__dol .przycisk { padding: 15px 24px; }
+.wynik__info { margin-top: 10px; font-size: 13px; color: var(--szary); }
+.wybor__x { position: absolute; top: 8px; right: 10px; border: 0; background: none; font-size: 24px; line-height: 1; color: #888; cursor: pointer; }
+
+.okienko { position: fixed; inset: 0; z-index: 65; display: grid; place-items: center; padding: 16px; background: rgba(0, 0, 0, .55); }
+.okienko[hidden] { display: none; }
+.okienko__karta { position: relative; width: min(460px, 100%); max-height: calc(100svh - 32px); overflow: auto; background: #fff; border-radius: 3px; padding: 28px; box-shadow: 0 20px 60px rgba(0, 0, 0, .35); }
+.okienko__zamknij { position: absolute; top: 10px; right: 14px; border: 0; background: none; font-size: 30px; line-height: 1; color: #777; cursor: pointer; }
+.okienko__tytul { font: 600 20px "Montserrat", sans-serif; color: #222; margin-bottom: 12px; padding-right: 26px; }
+.okienko .pobyt__formularz { margin-top: 16px; }
+.okienko .przycisk { width: 100%; padding: 15px; }
+
+@media (max-width: 760px) {
+  .wybor { padding: 14px; }
+  .wybor--goscie { width: calc(100% - 28px); }
+  .wynik__dol { flex-direction: column; align-items: stretch; }
+}
